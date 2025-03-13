@@ -1,0 +1,15 @@
+# Ref: https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository#configuring-the-template-chooser
+blank_issues_enabled: true
+contact_links:
+  - name: 🙋  Usage Questions
+    url: https://github.com/mhai/mhai/discussions
+    about: |
+      Use mhai's GitHub Discussions to ask "How do I do X with mhai?".
+  - name: 📖  Tutorial
+    url: https://github.com/mhai/mhai
+    about: |
+      The mhai tutorial is continually updated and provides an in depth walkthrough
+      of how to use the latest release of mhai.
+  - name: 📝  mhai Code of Conduct
+    url: https://github.com/mhai/mhai/coc/CODE_OF_CONDUCT.md
+    about: Expectations for how people will interact with each other on mhai's GitHub.
