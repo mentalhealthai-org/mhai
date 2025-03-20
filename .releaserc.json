@@ -7,10 +7,11 @@
       "@google/semantic-release-replace-plugin",
       {
         "replacements": [
+
           {
             "files": ["src/mhai/__init__.py"],
-            "from": "return \".*\"  # semantic-release",
-            "to": "return \"${nextRelease.version}\"  # semantic-release",
+            "from": "return '.*'  # semantic-release",
+            "to": "return '${nextRelease.version}'  # semantic-release",
             "results": [
               {
                 "file": "src/mhai/__init__.py",
