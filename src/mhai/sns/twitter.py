@@ -1,4 +1,4 @@
-"""sns (social networking service) module."""
+"""Module for extracting tweets from Twitter."""
 
 import time
 

@@ -1,4 +1,4 @@
-"""Unit tests for the sns module."""
+"""Unit tests for the TwitterExtractor class."""
 
 import unittest
 
