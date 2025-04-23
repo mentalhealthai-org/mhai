@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+  MASTODON_INSTANCE: https://mastodon.social
+  MASTODON_TEST_USER_HANDLE: Gargron@mastodon.social
+  MASTODON_TEST_HASHTAG: mastodon
+
 jobs:
   check-branch:
     if: ${{ github.event_name == 'pull_request' }}
@@ -56,6 +62,10 @@ jobs:
           activate-environment: mhai
           auto-update-conda: true
           conda-solver: libmamba
+
+      - name: Create environment variables files
+        run: |
+          envsubst < .envs/.env.tpl > .envs/.env
 
       - name: Install dependencies
         run: |
