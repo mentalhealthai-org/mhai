@@ -1,4 +1,4 @@
-"""Module for extracting tweets from Twitter."""
+"""Twitter extractor module (SNS wrapper)."""
 
 import time
 

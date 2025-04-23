@@ -1,4 +1,4 @@
-"""Unit tests for the TwitterExtractor class."""
+"""Test suite for the TwitterExtractor class."""
 
 import unittest
 
@@ -7,7 +7,7 @@ from unittest.mock import MagicMock, patch
 
 import pandas as pd
 
-from mhai.sns import Twitter
+from mhai.sns.twitter import Twitter
 
 
 class TestTwitterExtractor(unittest.TestCase):
