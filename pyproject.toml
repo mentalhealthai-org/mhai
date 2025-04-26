@@ -47,17 +47,11 @@ makim = "1.20.0"
 # 'PosixPath' object has no attribute 'endswith'
 virtualenv = "<=20.25.1"
 
-
-
 [tool.poetry.dependencies]
 pandas = "^2.2.3"
 tweepy = "^4.15.0"
 mastodon-py = "^2.0.1"
 python-dotenv = "^1.1.0"
-
-markers = [
-    "skip_on_ci: Skip these tests in CI",
-]
 
 [tool.bandit]
 exclude_dirs = ["tests"]
@@ -76,6 +70,9 @@ exclude = ["scripts/"]
 [tool.pytest.ini_options]
 testpaths = [
     "tests",
+]
+markers = [
+  "skip_on_ci: Skip these tests in CI",
 ]
 
 [tool.ruff]
