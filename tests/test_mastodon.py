@@ -2,9 +2,12 @@
 
 import unittest
 
+import pytest
+
 from mhai.sns.mastodon import MastodonExtractor
 
 
+@pytest.mark.skip_on_ci
 class TestMastodonExtractor(unittest.TestCase):
     """Test suite for the MastodonExtractor class."""
 

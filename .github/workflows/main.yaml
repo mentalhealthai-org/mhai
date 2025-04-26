@@ -6,12 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-env:
-  MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
-  MASTODON_INSTANCE: https://mastodon.social
-  MASTODON_TEST_USER_HANDLE: Gargron@mastodon.social
-  MASTODON_TEST_HASHTAG: mastodon
-
 jobs:
   check-branch:
     if: ${{ github.event_name == 'pull_request' }}
@@ -71,9 +65,18 @@ jobs:
         run: |
           poetry install
 
-      - name: Run tests
-        run: |
-          makim tests.unit
+      - name: Run unit tests (PR)
+        if: ${{ github.event_name == 'pull_request' }}
+        run: pytest -m "not skip_on_ci" -vvv
+
+      - name: Run unit tests (push)
+        if: ${{ github.event_name == 'push' }}
+        env:
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: https://mastodon.social
+          MASTODON_TEST_USER_HANDLE: Gargron@mastodon.social
+          MASTODON_TEST_HASHTAG: mastodon
+        run: makim tests.unit
 
       - name: Run style checks
         if: success() || failure()
