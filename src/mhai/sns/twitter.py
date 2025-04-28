@@ -1,4 +1,4 @@
-"""sns (social networking service) module."""
+"""Twitter extractor module (SNS wrapper)."""
 
 import time
 
