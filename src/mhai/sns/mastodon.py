@@ -6,10 +6,7 @@ from typing import Any
 
 import pandas as pd
 
-from dotenv import load_dotenv
 from mastodon import Mastodon, MastodonNotFoundError
-
-load_dotenv(dotenv_path='.envs/.env')
 
 
 class SocialMediaExtractorBase:
@@ -29,7 +26,7 @@ class MastodonExtractor(SocialMediaExtractorBase):
 
     @classmethod
     def connect(cls) -> 'MastodonExtractor':
-        """Connect to Mastodon using env-based config."""
+        """Connect to Mastodon using environment-based configuration."""
         access_token = os.getenv('MASTODON_TOKEN')
         instance_url = os.getenv(
             'MASTODON_INSTANCE', 'https://mastodon.social'
@@ -48,7 +45,7 @@ class MastodonExtractor(SocialMediaExtractorBase):
         return dict(self.client.me())
 
     def get_user(self, handle: str) -> dict[str, Any]:
-        """Return metadata for the given user handle."""
+        """Return metadata for a given user handle."""
         try:
             return dict(self.client.account_lookup(handle))
         except MastodonNotFoundError:
@@ -84,16 +81,17 @@ class MastodonExtractor(SocialMediaExtractorBase):
         return [dict(f) for f in self.client.account_followers(user['id'])]
 
     def get_following(self) -> list[dict[str, Any]]:
-        """Return list of followed accounts."""
+        """Return list of accounts followed by the authenticated user."""
         user = self.get_me()
         return [dict(f) for f in self.client.account_following(user['id'])]
 
     def get_notifications(self, limit: int = 40) -> list[dict[str, Any]]:
         """Return recent notifications."""
-        return [dict(n) for n in self.client.notifications(limit=limit)]
+        notifications = self.client.notifications(limit=limit)
+        return [dict(n) for n in notifications]
 
     def _to_dataframe(self, statuses: list[dict[str, Any]]) -> pd.DataFrame:
-        """Convert status list to DataFrame."""
+        """Convert a list of statuses into a pandas DataFrame."""
         return pd.DataFrame(
             [
                 {

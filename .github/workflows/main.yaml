@@ -59,7 +59,7 @@ jobs:
 
       - name: Create environment variables files
         run: |
-          envsubst < tests/.envs/.env.tpl > .envs/.env
+          envsubst < tests/.envs/.env.tpl > tests/.envs/.env
 
       - name: Install dependencies
         run: |
