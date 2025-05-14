@@ -1,24 +1,27 @@
-# src/mhai/evaluations/sentiment.py
 """
-Sentiment evaluation using a binary classifier by default.
+src/mhai/evaluations/sentiment.py.
 
-This module defines:
-- `ModelBase`: abstract base for evaluators
-- `get_sentiment_pipeline`: factory for HF sentiment-analysis pipeline
-- `SentimentEvaluator`: wrapper that defaults to SST-2 binary sentiment model
+Sentiment evaluation module.
+
+Defines:
+- ModelBase: abstract base for evaluators
+- get_sentiment_pipeline: factory for HF sentiment pipeline
+- SentimentEvaluator: binary sentiment evaluator
 """
 
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
-import transformers
+from transformers import pipeline  # type: ignore[attr-defined]
 
 
 class ModelBase(ABC):
     """
-    Base class for any textual evaluator.
+    Base class for text evaluators.
 
-    Manages default parameters and enforces interface.
+    Manages default parameters and requires subclasses to implement:
+      - _load_model()
+      - evaluate(text)
     """
 
     default_model_name: str
@@ -44,38 +47,28 @@ class ModelBase(ABC):
             else self.default_output_max_length
         )
         self.api_params = api_params or {}
-        # Lazy-load the underlying pipeline
         self._model = self._load_model()
 
     @abstractmethod
     def _load_model(self) -> Any:
-        """
-        Instantiate and return the underlying HF pipeline or model.
-        """
-
+        """Load and return the underlying pipeline or model."""
         ...
 
     @abstractmethod
     def evaluate(self, text: str) -> Any:
-        """
-        Run inference on `text` and return the result.
-        """
-
+        """Run inference on `text` and return the result."""
         ...
 
 
 def get_sentiment_pipeline(model_name: str, **kwargs: Any) -> Any:
     """
-    Factory for Hugging Face sentiment-analysis pipeline.
+    Return a Hugging Face sentiment-analysis pipeline.
 
-    Defaults to using a binary classifier (SST-2) and top_k=1.
-    Additional kwargs are forwarded to the pipeline constructor.
+    Defaults to top_k=1; accepts extra kwargs like device.
     """
-
     params: Dict[str, Any] = {'top_k': 1}
     params.update(kwargs)
-
-    return transformers.pipeline(
+    return pipeline(
         task='sentiment-analysis',
         model=model_name,
         **params,
@@ -83,26 +76,26 @@ def get_sentiment_pipeline(model_name: str, **kwargs: Any) -> Any:
 
 
 class SentimentEvaluator(ModelBase):
+    """Binary sentiment evaluator using SST-2 by default."""
+
     default_model_name = 'distilbert-base-uncased-finetuned-sst-2-english'
     default_temperature = 0.0
     default_output_max_length = 2
 
     def _load_model(self) -> Any:
+        """Instantiate the sentiment pipeline."""
         return get_sentiment_pipeline(self.model_name, **self.api_params)
 
     def evaluate(self, text: str) -> Dict[str, Any]:
         """
-        Perform sentiment classification on `text`, returning:
-          {'label': 'POSITIVE'|'NEGATIVE', 'score': float}.
+        Evaluate sentiment.
 
-        Handles both flat and nested-list outputs from HF.
+        Returns a dict with:
+        - label: 'POSITIVE' or 'NEGATIVE'
+        - score: confidence score
         """
-
         raw = self._model(text)
-
         if isinstance(raw, list) and raw and isinstance(raw[0], list):
             raw = raw[0]
-
-        first = raw[0] if isinstance(raw, list) else raw
-
-        return {'label': first['label'], 'score': first['score']}
+        result = raw[0] if isinstance(raw, list) else raw
+        return {'label': result['label'], 'score': result['score']}
