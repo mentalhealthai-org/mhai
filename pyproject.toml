@@ -52,6 +52,7 @@ pandas = "^2.2.3"
 tweepy = "^4.15.0"
 mastodon-py = "^2.0.1"
 python-dotenv = "^1.1.0"
+transformers = "^4.51.3"
 
 [tool.bandit]
 exclude_dirs = ["tests"]
