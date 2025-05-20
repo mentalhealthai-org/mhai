@@ -1,6 +1,4 @@
 """
-src/mhai/evaluations/sentiment.py.
-
 Sentiment evaluation module.
 
 Defines:
