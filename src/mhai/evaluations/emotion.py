@@ -10,7 +10,7 @@ from typing import Any
 
 from transformers import pipeline  # type: ignore[attr-defined]
 
-from .sentiment import ModelBase
+from .base import ModelBase
 
 
 def get_emotion_pipeline(model_name: str, **kwargs: Any) -> Any:
