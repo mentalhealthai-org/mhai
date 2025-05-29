@@ -20,7 +20,8 @@ def get_mental_pipeline(model_name: str, **kwargs: Any) -> Any:
     return pipeline(
         task='text-classification',
         model=model_name,
-        **params,
+        top_k=None,  # returns all labels
+        **kwargs,
     )
 
 
