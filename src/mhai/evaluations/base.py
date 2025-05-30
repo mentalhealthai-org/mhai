@@ -20,11 +20,13 @@ class ModelBase(ABC):
     def __init__(
         self,
         model_name: Optional[str] = None,
+        token: Optional[str] = None,
         temperature: Optional[float] = None,
         output_max_length: Optional[int] = None,
         api_params: Optional[Dict[str, Any]] = None,
     ) -> None:
         self.model_name = model_name or self.default_model_name
+        self.token = token
         self.temperature = (
             temperature
             if temperature is not None
