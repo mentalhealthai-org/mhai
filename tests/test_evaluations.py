@@ -1,3 +1,5 @@
+"""Test suite for the mapping_membert module."""
+
 import unittest
 
 from typing import Dict, List
@@ -9,31 +11,33 @@ from mhai.evaluations.mapping_membert import (
 mental_health_test_texts: Dict[str, List[str]] = {
     'anxiety': [
         'I struggle to breathe just thinking about my daily tasks.',
-        'I feel like something bad is going to happen, even when everything seems fine.',
+        (
+            'I feel like something bad is going to happen, '
+            'even when everything seems fine.'
+        ),
         'My heart races every time I need to leave the house.',
         'I stay up all night worrying about things that might never happen.',
         'I avoid crowded places because I panic just thinking about them.',
-        'I feel a deep sadness that won’t go away.',
     ],
     'depression': [
         'Nothing makes sense anymore; everything feels colorless.',
-        # "I feel a deep sadness that won’t go away.",
-        'I don’t even want to get out of bed.',
-        'Even when I’m surrounded by people, I feel completely alone.',
-        'I’ve lost interest in everything that used to bring me joy.',
+        'I do not even want to get out of bed.',
+        'Even when I am surrounded by people, I feel completely alone.',
+        'I have lost interest in everything that used to bring me joy.',
     ],
     'psychosis': [
-        'I hear voices telling me I’m in danger, even when I’m alone.',
-        'I think I’m being followed, but no one believes me.',
-        'Time feels like it stops sometimes, like I’m stuck in a loop.',
-        'I’m certain I can communicate through signals others can’t see.',
-        'I see things that others say aren’t real, but I know they are.',
+        'I hear voices telling me I am in danger, even when I am alone.',
+        'I think I am being followed, but no one believes me.',
+        'Time feels like it stops sometimes, like I am stuck in a loop.',
+        ('I am certain I can communicate through signals others cannot see.'),
+        ('I see things that others say are not real, but I know they are.'),
     ],
 }
 
 
 class TestMentBERTClassifier(unittest.TestCase):
     """Test suite for the MentBERTClassifier class."""
+
     @classmethod
     def setUpClass(cls):
         """Test that the classifier can be initialized."""

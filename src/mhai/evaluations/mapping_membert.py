@@ -1,15 +1,23 @@
-from typing import Dict
+"""Mapping from mentBERT to core mental health categories."""
+
+from __future__ import annotations
+
+from typing import ClassVar, Dict
 
 from mhai.evaluations.mental import MentalEvaluator
 
 
 class MentBERTClassifier(MentalEvaluator):
     """
-    Specialized evaluator using the mentBERT model, with mapping from specific
-    mental health labels to broader core categories.
+    Map mentBERT labels to core mental health categories.
+
+    MentBERT is a mental health specific transformer model that can detect
+    multiple mental health conditions from text. This class takes the output of
+    the mentBERT model and maps its labels to a smaller set of core mental
+    health categories.
     """
 
-    MENTBERT_TO_CORE: Dict[str, str] = {
+    MENTBERT_TO_CORE: ClassVar[Dict[str, str]] = {
         'Anxiety': 'anxiety',  # Classic anxiety symptoms
         'Depression': 'depression',  # Sadness, low energy
         'Schizophrenia': 'psychosis',  # Delusions, hallucinations
@@ -32,10 +40,11 @@ class MentBERTClassifier(MentalEvaluator):
         self, raw_scores: Dict[str, float]
     ) -> Dict[str, float]:
         """
-        Maps mentBERT labels to broader core categories and aggregates scores.
+        Map mentBERT labels to broader core categories and aggregates scores.
+
         Returns a dictionary sorted by score descending.
         """
-        output: Dict[str, float] = {}
+        output: dict[str, float] = {}
         for label, score in raw_scores.items():
             core = self.MENTBERT_TO_CORE.get(label, 'unknown')
             output[core] = output.get(core, 0.0) + score
