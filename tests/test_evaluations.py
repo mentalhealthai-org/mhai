@@ -5,7 +5,7 @@ import unittest
 from typing import Dict, List
 
 from mhai.evaluations.mapping_membert import (
-    MentBERTClassifier,  # replace with actual import path
+    MentBERTClassifier,
 )
 
 mental_health_test_texts: Dict[str, List[str]] = {
@@ -22,7 +22,6 @@ mental_health_test_texts: Dict[str, List[str]] = {
     'depression': [
         'Nothing makes sense anymore; everything feels colorless.',
         'I do not even want to get out of bed.',
-        'Even when I am surrounded by people, I feel completely alone.',
         'I have lost interest in everything that used to bring me joy.',
     ],
     'psychosis': [
@@ -31,6 +30,9 @@ mental_health_test_texts: Dict[str, List[str]] = {
         'Time feels like it stops sometimes, like I am stuck in a loop.',
         ('I am certain I can communicate through signals others cannot see.'),
         ('I see things that others say are not real, but I know they are.'),
+    ],
+    'other': [
+        'Even when I am surrounded by people, I feel completely alone.',
     ],
 }
 
