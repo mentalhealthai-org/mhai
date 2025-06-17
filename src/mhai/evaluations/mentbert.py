@@ -6,7 +6,7 @@ Detects mental health conditions from text using MentBERT.
 
 import os
 
-from typing import Any, Dict
+from typing import Any
 
 from transformers import pipeline  # type: ignore[attr-defined]
 
@@ -40,7 +40,7 @@ class MentBERTMentalHealthEvaluator(ModelBase):
     def _load_model(self) -> Any:
         return get_mentbert_pipeline(self.model_name, **self.api_params)
 
-    def evaluate(self, text: str) -> Dict[str, float]:
+    def evaluate(self, text: str) -> dict[str, float]:
         """Run mental health classification on `text`."""
         raw = self._model(text)
 

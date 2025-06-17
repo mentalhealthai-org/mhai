@@ -2,13 +2,11 @@
 
 import unittest
 
-from typing import Dict, List
-
 from mhai.evaluations.mapping_membert import (
     MentBERTClassifier,
 )
 
-mental_health_test_texts: Dict[str, List[str]] = {
+mental_health_test_texts: dict[str, list[str]] = {
     'anxiety': [
         'I struggle to breathe just thinking about my daily tasks.',
         (

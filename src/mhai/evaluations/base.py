@@ -1,7 +1,7 @@
 """Base class for text evaluators."""
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 
 class ModelBase(ABC):
@@ -23,7 +23,7 @@ class ModelBase(ABC):
         token: Optional[str] = None,
         temperature: Optional[float] = None,
         output_max_length: Optional[int] = None,
-        api_params: Optional[Dict[str, Any]] = None,
+        api_params: Optional[dict[str, Any]] = None,
     ) -> None:
         self.model_name = model_name or self.default_model_name
         self.token = token

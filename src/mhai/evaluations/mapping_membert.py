@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import ClassVar, Dict
+from typing import ClassVar
 
 from mhai.evaluations.mental import MentalEvaluator
 
@@ -17,7 +17,7 @@ class MentBERTClassifier(MentalEvaluator):
     health categories.
     """
 
-    MENTBERT_TO_CORE: ClassVar[Dict[str, str]] = {
+    MENTBERT_TO_CORE: ClassVar[dict[str, str]] = {
         'Anxiety': 'anxiety',  # Classic anxiety symptoms
         'Depression': 'depression',  # Sadness, low energy
         'Schizophrenia': 'psychosis',  # Delusions, hallucinations
@@ -37,8 +37,8 @@ class MentBERTClassifier(MentalEvaluator):
         )
 
     def map_to_core_categories(
-        self, raw_scores: Dict[str, float]
-    ) -> Dict[str, float]:
+        self, raw_scores: dict[str, float]
+    ) -> dict[str, float]:
         """
         Map mentBERT labels to broader core categories and aggregates scores.
 
